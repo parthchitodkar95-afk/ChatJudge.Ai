@@ -77,7 +77,7 @@ for each participant.
 | Part | Technology |
 |------|------------|
 | Frontend | HTML, CSS, JavaScript |
-| AI Engine | Gemini API (gemini-2.0-flash) |
+| AI Engine | Gemini API (gemini-3.1-flash) |
 | Charts | Chart.js |
 | Hosting | Netlify |
 
@@ -89,9 +89,8 @@ for each participant.
    > Chat → 3 dots → More → Export Chat → Without Media
 2. Open ChatJudge
 3. Paste the exported chat text
-4. Enter your Gemini API key
-5. Click **Analyze**
-6. Get exposed 💀
+4. Click **Analyze**
+5. Get exposed 💀
 
 ---
 
