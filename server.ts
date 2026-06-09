@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI, Type, ThinkingLevel } from "@google/genai";
@@ -10,8 +11,13 @@ async function startServer() {
   const app = express();
   const PORT = 3000;
 
-  app.use(express.json({ limit: "50mb" }));
+  app.use(
+    cors({
+      origin: "https://chatjudge.netlify.app"
+    })
+  );
 
+  app.use(express.json({ limit: "50mb" }));
   // In-memory relational state cache for public sharing URLs
   const sharedReportsCache = new Map<string, { analysisResult: any; chatText: string }>();
 
