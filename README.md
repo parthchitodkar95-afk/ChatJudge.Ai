@@ -99,7 +99,7 @@ for each participant.
 ## 🙌 Made By
 **Parth Chitodkar**
 - GitHub: [@parthchitodkar95-afk](https://github.com/parthchitodkar95-afk)
-- LinkedIn: [linkedin.com/in/yourprofile](www.linkedin.com/in/parthchitodkar-425749312)
+- LinkedIn: [@parthchitodkar-425749312](www.linkedin.com/in/parthchitodkar-425749312)
 
 ---
 
