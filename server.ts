@@ -12,10 +12,12 @@ async function startServer() {
   const PORT = 3000;
 
   app.use(
-    cors({
-      origin: "https://chatjudge.netlify.app"
-    })
-  );
+  cors({
+    origin: "https://chatjudge.netlify.app",
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type"]
+  })
+);
 
   app.use(express.json({ limit: "50mb" }));
   // In-memory relational state cache for public sharing URLs
