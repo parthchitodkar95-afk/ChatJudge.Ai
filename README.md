@@ -4,7 +4,7 @@
 ---
 
 ## 🌐 Live Demo
-[chatjudge.netlify.app](https://chatjudge.netlify.app)
+[chatjudge.netlify.app]([https://chatjudge.netlify.app](https://chatjudge.netlify.app/))
 
 ---
 
