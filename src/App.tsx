@@ -139,15 +139,15 @@ export default function App() {
 
   // Parse and fetch shared report on mount if specified
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const shareId = params.get("share");
-    if (shareId) {
-      setIsSharedLoading(true);
-      setIsSharedReportView(true);
-     fetch(`https://chatjudge-ai.onrender.com/api/share/${shareId}`)
-        .then((res) => {
-          if (!res.ok) throw new Error("Could not retrieve shared report");
-          return res.json();
+   const params = new URLSearchParams(window.location.search);
+const shareId = params.get("share");
+if (shareId) {
+  setIsSharedLoading(true);
+  setIsSharedReportView(true);
+  fetch(`https://chatjudge-ai.onrender.com/api/share/${shareId}`)
+    .then((res) => {
+      if (!res.ok) throw new Error("Could not retrieve shared report");
+      return res.json();
         })
         .then((data) => {
           setAnalysisResult(data.analysisResult);
