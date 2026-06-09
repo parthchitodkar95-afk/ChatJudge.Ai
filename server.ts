@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 import { createServer as createViteServer } from "vite";
-import { GoogleGenAI, Type, ThinkingLevel } from "@google/genai";
+import { GoogleGenAI, Type, } from "@google/genai";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -153,13 +153,10 @@ Provide relationship improvement advice based on the chat's context:
       const response = await ai.models.generateContent({
  model: "gemini-2.5-flash",
         contents: `Chat to analyze:\n${processedChatText}`,
-        config: {
-          systemInstruction: systemInstruction,
-          responseMimeType: "application/json",
-          thinkingConfig: {
-            thinkingLevel: ThinkingLevel.LOW
-          },
-          responseSchema: {
+      config: {
+  systemInstruction: systemInstruction,
+  responseMimeType: "application/json",
+  responseSchema: {
             type: Type.OBJECT,
             properties: {
               persons: {
