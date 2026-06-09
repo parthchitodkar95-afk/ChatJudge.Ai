@@ -1,0 +1,6 @@
+{
+  "name": "ChatJudge",
+  "description": "Expose and analyze WhatsApp chats using Claude AI. Get funny verdicts, detailed personality traits, quoted evidence, and relationship health reports with interactive radar charts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

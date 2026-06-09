@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --color-dark-bg: #0D0D0D;
+  --color-dark-card: #161616;
+  --color-dark-border: #2a2a2a;
+  
+  --bg-app: #0D0D0D;
+  --bg-card: #111111;
+  --bg-card-alt: #161616;
+  --border-main: #2a2a2a;
+  --text-main: #f3f4f6;
+  --text-sub: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-accent: #ffffff;
+  --scrollbar-track: #0D0D0D;
+  --scrollbar-thumb: #2a2a2a;
+  --scrollbar-thumb-hover: #3a3a3a;
+}
+
+:root.light {
+  --color-dark-bg: #F8FAFC;
+  --color-dark-card: #ffffff;
+  --color-dark-border: #e2e8f0;
+
+  --bg-app: #F8FAFC;
+  --bg-card: #ffffff;
+  --bg-card-alt: #f1f5f9;
+  --border-main: #cbd5e1;
+  --text-main: #0f172a;
+  --text-sub: #334155;
+  --text-muted: #64748b;
+  --text-accent: #0f172a;
+  --scrollbar-track: #F8FAFC;
+  --scrollbar-thumb: #cbd5e1;
+  --scrollbar-thumb-hover: #94a3b8;
+}
+
+@theme {
+  --color-dark-bg: var(--color-dark-bg);
+  --color-dark-card: var(--color-dark-card);
+  --color-dark-border: var(--color-dark-border);
+  --color-accent-toxic: #FF4444;
+  --color-accent-pure: #22C55E;
+  --font-heading: "Space Grotesk", sans-serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+body {
+  background-color: var(--color-dark-bg);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  transition: background-color 150ms ease-in-out, color 150ms ease-in-out;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* Custom styles for animated bars and scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* --- LIGHT MODE COMPREHENSIVE STYLE OVERRIDES --- */
+:root.light {
+  color-scheme: light;
+}
+
+:root.light body {
+  background-color: var(--color-dark-bg);
+  color: var(--text-main);
+}
+
+/* Case-insensitive HEX-to-light-theme overrides for all backgrounds */
+:root.light [class*="bg-[#0" i],
+:root.light [class*="bg-[#11" i],
+:root.light [class*="bg-[#1212" i],
+:root.light [class*="bg-[#0e0e" i],
+:root.light [class*="bg-[#0d" i],
+:root.light [class*="bg-[#0a" i],
+:root.light [class*="bg-[#08" i] {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-main) !important;
+}
+
+:root.light [class*="bg-[#1616" i] {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-main) !important;
+}
+
+:root.light [class*="bg-[#17" i],
+:root.light [class*="bg-[#18" i],
+:root.light [class*="bg-[#19" i],
+:root.light [class*="bg-[#15" i],
+:root.light [class*="bg-[#21" i],
+:root.light [class*="bg-[#20" i],
+:root.light [class*="bg-[#2e" i],
+:root.light [class*="bg-[#1a1" i],
+:root.light [class*="bg-[#1d1d" i] {
+  background-color: var(--bg-card-alt) !important;
+  border-color: var(--border-main) !important;
+}
+
+/* Deepest background for the main layouts and outer sections */
+:root.light .min-h-screen,
+:root.light [class*="bg-[#0d0d0d]" i],
+:root.light [class*="bg-[#050505]" i] {
+  background-color: var(--bg-app) !important;
+}
+
+/* Overriding specific borders */
+:root.light [class*="border-[#" i],
+:root.light [class*="border-neutral-800" i],
+:root.light [class*="border-slate-800" i],
+:root.light [class*="divide-[#" i] {
+  border-color: var(--border-main) !important;
+}
+
+/* Solid red, green, purple and other active statuses colors should keep high contrast and use nicer lighter variants in light mode */
+:root.light [class*="bg-emerald-950" i] {
+  background-color: #f0fdf4 !important;
+  border-color: #bbf7d0 !important;
+  color: #166534 !important;
+}
+
+:root.light [class*="bg-red-950" i] {
+  background-color: #fff1f2 !important;
+  border-color: #fecdd3 !important;
+  color: #991b1b !important;
+}
+
+:root.light [class*="bg-purple-950" i],
+:root.light [class*="bg-purple-900" i] {
+  background-color: #f3e8ff !important;
+  border-color: #e9d5ff !important;
+  color: #6b21a8 !important;
+}
+
+:root.light [class*="bg-[#120404]" i] {
+  background-color: #fff1f2 !important;
+  border-color: #fecdd3 !important;
+}
+
+:root.light [class*="bg-[#041208]" i] {
+  background-color: #f0fdf4 !important;
+  border-color: #bbf7d0 !important;
+}
+
+:root.light [class*="bg-emerald-500/5" i],
+:root.light [class*="bg-emerald-500/10" i] {
+  background-color: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+  color: #065f46 !important;
+}
+
+:root.light [class*="bg-rose-500/5" i],
+:root.light [class*="bg-[#ff4444]/15" i],
+:root.light [class*="bg-[#ff4444]/10" i] {
+  background-color: #fff5f5 !important;
+  border-color: #feb2b2 !important;
+  color: #c53030 !important;
+}
+
+:root.light [class*="bg-amber-500/5" i],
+:root.light [class*="bg-amber-500/10" i] {
+  background-color: #fffbeb !important;
+  border-color: #fde047 !important;
+  color: #92400e !important;
+}
+
+/* Specific background color maps */
+:root.light [class*="bg-[#222]" i],
+:root.light [class*="bg-[#333]" i],
+:root.light [class*="bg-[#303030]" i] {
+  background-color: var(--bg-card-alt) !important;
+  border-color: var(--border-main) !important;
+}
+
+/* Loader / Processing transparency */
+:root.light [class*="bg-[#0D0D0DD0]" i],
+:root.light [class*="bg-[#0d0d0dd0]" i],
+:root.light [class*="bg-[#0a0a0ad8]" i] {
+  background-color: rgba(248, 250, 252, 0.95) !important;
+}
+
+/* Comprehensive Text color overrides list for extreme readability */
+:root.light .text-white,
+:root.light .text-slate-100,
+:root.light .text-slate-200,
+:root.light .text-zinc-100,
+:root.light .text-zinc-200,
+:root.light .text-neutral-100,
+:root.light .text-neutral-200,
+:root.light .text-gray-100,
+:root.light .text-gray-200 {
+  color: var(--text-accent) !important;
+}
+
+:root.light .text-slate-300,
+:root.light .text-slate-400,
+:root.light .text-zinc-300,
+:root.light .text-zinc-400,
+:root.light .text-neutral-300,
+:root.light .text-neutral-400,
+:root.light .text-gray-300,
+:root.light .text-gray-400,
+:root.light .text-slate-200\/80 {
+  color: var(--text-sub) !important;
+}
+
+:root.light .text-slate-500,
+:root.light .text-slate-600,
+:root.light .text-zinc-500,
+:root.light .text-zinc-600,
+:root.light .text-neutral-500,
+:root.light .text-gray-500 {
+  color: var(--text-muted) !important;
+}
+
+/* Do not color text inside specific solid active badges or CTA buttons black */
+:root.light button *,
+:root.light a *,
+:root.light .bg-gradient-to-r *,
+:root.light [class*="bg-red-6" i] *,
+:root.light [class*="bg-emerald-6" i] *,
+:root.light [class*="bg-indigo-6" i] *,
+:root.light [class*="bg-rose-6" i] * {
+  color: inherit !important;
+}
+
+/* Inputs and textareas */
+:root.light textarea,
+:root.light input {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+:root.light textarea::placeholder,
+:root.light input::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Preloaded instructions and warning alert blocks */
+:root.light .bg-neutral-900\/30,
+:root.light [className*="bg-neutral-900/30" i] {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Radiant glow background override so it is subtle and beautiful in light mode */
+:root.light .bg-radial-gradient {
+  background-image: radial-gradient(circle at center, rgba(239, 68, 68, 0.04) 0%, transparent 80%) !important;
+}
