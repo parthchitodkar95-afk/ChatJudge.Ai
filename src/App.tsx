@@ -172,7 +172,7 @@ if (shareId) {
     if (!analysisResult) return;
     setIsSharing(true);
     try {
-      const response = await fetch("/api/share", {
+     const response = await fetch("https://chatjudge-ai.onrender.com/api/share", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
