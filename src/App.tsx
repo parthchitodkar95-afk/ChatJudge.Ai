@@ -144,7 +144,7 @@ export default function App() {
     if (shareId) {
       setIsSharedLoading(true);
       setIsSharedReportView(true);
-      fetch(`/api/share/${shareId}`)
+     fetch(`https://chatjudge-ai.onrender.com/api/share/${shareId}`)
         .then((res) => {
           if (!res.ok) throw new Error("Could not retrieve shared report");
           return res.json();
