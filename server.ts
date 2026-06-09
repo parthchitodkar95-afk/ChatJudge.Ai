@@ -151,7 +151,7 @@ Provide relationship improvement advice based on the chat's context:
 - coupleChallenge: A creative, playful custom 48-hour challenge (e.g. 'The 48-hour No-Blaming Pact' or similar) to start building progress.`;
 
       const response = await ai.models.generateContent({
-     model: "gemini-2.5-flash",
+    model: "gemini-3.5-flash",
         contents: `Chat to analyze:\n${processedChatText}`,
         config: {
           systemInstruction: systemInstruction,
