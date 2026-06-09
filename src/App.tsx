@@ -321,7 +321,7 @@ export default function App() {
     setIsAnalyzing(true);
 
     try {
-      const response = await fetch("/api/analyze", {
+      const response = await fetch("https://chatjudge-ai.onrender.com/api/analyze", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
