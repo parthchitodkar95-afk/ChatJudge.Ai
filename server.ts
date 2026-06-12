@@ -120,99 +120,133 @@ Rules:
 - Relationship explanation must be under 2 short sentences.
 - Couple challenge and actionable steps must be ultra-short (max 10 words each).`;
 
-      const response = await ai.models.generateContent({
-        model: "gemini-3.5-flash",
-        contents: `Chat to analyze:\n${processedChatText}`,
-        config: {
-          systemInstruction: systemInstruction,
-          responseMimeType: "application/json",
-          thinkingConfig: {
-            thinkingLevel: ThinkingLevel.MINIMAL
-          },
-          responseSchema: {
-            type: Type.OBJECT,
-            properties: {
-              persons: {
-                type: Type.ARRAY,
-                items: {
+      const modelCandidates = ["gemini-3.5-flash", "gemini-3.1-flash-lite", "gemini-flash-latest"];
+      let lastError: any = null;
+      let generateResponse: any = null;
+
+      for (const currentModel of modelCandidates) {
+        let attempts = 0;
+        const maxAttempts = 2; // Try up to twice for each model
+        while (attempts < maxAttempts) {
+          try {
+            console.log(`Attempting analysis with model: ${currentModel} (attempt ${attempts + 1}/${maxAttempts})`);
+            generateResponse = await ai.models.generateContent({
+              model: currentModel,
+              contents: `Chat to analyze:\n${processedChatText}`,
+              config: {
+                systemInstruction: systemInstruction,
+                responseMimeType: "application/json",
+                thinkingConfig: {
+                  thinkingLevel: ThinkingLevel.MINIMAL
+                },
+                responseSchema: {
                   type: Type.OBJECT,
                   properties: {
-                    name: { type: Type.STRING },
-                    verdict: { type: Type.STRING },
-                    roast: { type: Type.STRING },
-                    redFlags: {
-                      type: Type.ARRAY,
-                      items: { type: Type.STRING }
-                    },
-                    greenFlags: {
-                      type: Type.ARRAY,
-                      items: { type: Type.STRING }
-                    },
-                    scores: {
-                      type: Type.OBJECT,
-                      properties: {
-                        toxicity: { type: Type.INTEGER },
-                        ego: { type: Type.INTEGER },
-                        attitude: { type: Type.INTEGER },
-                        love: { type: Type.INTEGER },
-                        hate: { type: Type.INTEGER },
-                        humor: { type: Type.INTEGER },
-                        dominance: { type: Type.INTEGER },
-                        coldness: { type: Type.INTEGER }
-                      },
-                      required: ["toxicity", "ego", "attitude", "love", "hate", "humor", "dominance", "coldness"]
-                    },
-                    evidence: {
+                    persons: {
                       type: Type.ARRAY,
                       items: {
                         type: Type.OBJECT,
                         properties: {
-                          trait: { type: Type.STRING },
-                          quote: { type: Type.STRING },
-                          explanation: { type: Type.STRING }
+                          name: { type: Type.STRING },
+                          verdict: { type: Type.STRING },
+                          roast: { type: Type.STRING },
+                          redFlags: {
+                            type: Type.ARRAY,
+                            items: { type: Type.STRING }
+                          },
+                          greenFlags: {
+                            type: Type.ARRAY,
+                            items: { type: Type.STRING }
+                          },
+                          scores: {
+                            type: Type.OBJECT,
+                            properties: {
+                              toxicity: { type: Type.INTEGER },
+                              ego: { type: Type.INTEGER },
+                              attitude: { type: Type.INTEGER },
+                              love: { type: Type.INTEGER },
+                              hate: { type: Type.INTEGER },
+                              humor: { type: Type.INTEGER },
+                              dominance: { type: Type.INTEGER },
+                              coldness: { type: Type.INTEGER }
+                            },
+                            required: ["toxicity", "ego", "attitude", "love", "hate", "humor", "dominance", "coldness"]
+                          },
+                          evidence: {
+                            type: Type.ARRAY,
+                            items: {
+                              type: Type.OBJECT,
+                              properties: {
+                                trait: { type: Type.STRING },
+                                quote: { type: Type.STRING },
+                                explanation: { type: Type.STRING }
+                              },
+                              required: ["trait", "quote", "explanation"]
+                            }
+                          }
                         },
-                        required: ["trait", "quote", "explanation"]
+                        required: ["name", "verdict", "scores", "evidence", "roast", "redFlags", "greenFlags"]
                       }
+                    },
+                    relationship: {
+                      type: Type.OBJECT,
+                      properties: {
+                        score: { type: Type.INTEGER },
+                        label: { type: Type.STRING },
+                        summary: { type: Type.STRING }
+                      },
+                      required: ["score", "label", "summary"]
+                    },
+                    apologyVerdict: {
+                      type: Type.OBJECT,
+                      properties: {
+                        shouldApologizeFirst: { type: Type.STRING },
+                        reasoning: { type: Type.STRING }
+                      },
+                      required: ["shouldApologizeFirst", "reasoning"]
+                    },
+                    relationshipAdvice: {
+                      type: Type.OBJECT,
+                      properties: {
+                        actionableSteps: {
+                          type: Type.ARRAY,
+                          items: { type: Type.STRING }
+                        },
+                        coupleChallenge: { type: Type.STRING }
+                      },
+                      required: ["actionableSteps", "coupleChallenge"]
                     }
                   },
-                  required: ["name", "verdict", "scores", "evidence", "roast", "redFlags", "greenFlags"]
+                  required: ["persons", "relationship", "apologyVerdict", "relationshipAdvice"]
                 }
-              },
-              relationship: {
-                type: Type.OBJECT,
-                properties: {
-                  score: { type: Type.INTEGER },
-                  label: { type: Type.STRING },
-                  summary: { type: Type.STRING }
-                },
-                required: ["score", "label", "summary"]
-              },
-              apologyVerdict: {
-                type: Type.OBJECT,
-                properties: {
-                  shouldApologizeFirst: { type: Type.STRING },
-                  reasoning: { type: Type.STRING }
-                },
-                required: ["shouldApologizeFirst", "reasoning"]
-              },
-              relationshipAdvice: {
-                type: Type.OBJECT,
-                properties: {
-                  actionableSteps: {
-                    type: Type.ARRAY,
-                    items: { type: Type.STRING }
-                    },
-                  coupleChallenge: { type: Type.STRING }
-                },
-                required: ["actionableSteps", "coupleChallenge"]
               }
-            },
-            required: ["persons", "relationship", "apologyVerdict", "relationshipAdvice"]
+            });
+            break; // Success! Exit the attempts loop for this model.
+          } catch (err: any) {
+            attempts++;
+            lastError = err;
+            console.warn(`Model ${currentModel} analysis attempt ${attempts} failed:`, err.message || err);
+            
+            // Wait for backoff if we have remaining attempts for this model
+            if (attempts < maxAttempts) {
+              const backoffDelay = attempts * 1500;
+              console.log(`Waiting ${backoffDelay}ms before retry on ${currentModel}...`);
+              await new Promise(resolve => setTimeout(resolve, backoffDelay));
+            }
           }
         }
-      });
+        
+        if (generateResponse) {
+          console.log(`Analysis successfully completed using model: ${currentModel}`);
+          break; // Exit the candidates loop since we got a valid response
+        }
+      }
 
-      const rawText = response.text;
+      if (!generateResponse) {
+        throw new Error(lastError?.message || "All fallback models returned transient errors due to peak demand. Please wait a moment and try again.");
+      }
+
+      const rawText = generateResponse.text;
       if (!rawText) {
         throw new Error("Empty response received from GenAI backend.");
       }
